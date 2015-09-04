@@ -194,11 +194,12 @@ class Handler:
 			elif self.line.startswith("M "):
 				items = self.line.split(' ')
 				path = items[3][:-1]
+				if os.path.dirname(path) and not os.path.exists(os.path.dirname (path)):
+					os.makedirs(os.path.dirname(path))
 				sock = open(path, "w")
 				if items[2] != "inline":
 					idx = int(items[2][1:])
 					sock.write(self.marks[idx])
-					del self.marks[idx]
 				else:
 					self.read_next_line()
 					self.handle_data()
