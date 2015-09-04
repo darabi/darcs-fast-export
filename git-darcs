@@ -75,7 +75,7 @@ fetch()
 	location=$(get_location $remote)
 	git_map=$git_dir/darcs-git/$remote-git-map
 	darcs_map=$git_dir/darcs-git/$remote-darcs-map
-	common_opts="--working $git_dir/darcs-git/repo --logfile $git_dir/darcs-git/fetch.log --git-branch=darcs/$remote"
+	common_opts="--working $git_dir/darcs-git/repo-$remote --logfile $git_dir/darcs-git/fetch-$remote.log --git-branch=darcs/$remote"
         dfe_opts=$(git config git-darcs.$remote.darcs-fast-export-options)
 	if [ ! -f $git_map -a ! -f $darcs_map ]; then
 		echo "There doesn't seem to be an existing refmap."
