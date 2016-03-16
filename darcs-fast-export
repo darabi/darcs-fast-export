@@ -214,6 +214,8 @@ else:
 		import chardet
 		progress("encoding is not utf8, guessing charset")
 		encoding = chardet.detect(buf)['encoding']
+		if encoding is None:
+			encoding='utf-8'
 		progress("detected encoding is %s" % encoding)
 		xmldoc = xml.dom.minidom.parseString(unicode(buf, encoding).encode('utf-8'))
 sys.stdout.flush()
