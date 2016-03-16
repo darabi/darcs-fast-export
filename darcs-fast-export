@@ -199,7 +199,14 @@ progress("getting list of patches")
 if not len(import_marks):
 	sock = os.popen("darcs changes --xml --reverse --repo %s" % origin)
 else:
-	sock = os.popen("darcs changes --xml --reverse  --repo %s --from-match 'hash %s'" % (origin, import_marks[-1]))
+	# darcs 2.8 seems to have returned something like this:
+	# 20060906195130-6b9e8-62fafff6202052aad7b46ac934c1521db051145c
+	# we check for - and set the hash accordingly
+	if '-' in import_marks[-1]:
+		hash = import_marks[-1].split('-')[2]
+	else:
+		hash = import_marks[-1]
+	sock = os.popen("darcs changes --xml --reverse  --repo %s --from-match 'hash %s'" % (origin, hash))
 buf = sock.read()
 sock.close()
 # this is hackish. we need to escape some bad chars, otherwise the xml
